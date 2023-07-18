@@ -10,7 +10,9 @@ const getDogsByNameHandler = (req, res) => {
 };
 
 const getDogsByIdHandler = (req, res) => {
-    res.send("NIY:ESTOY EN DOGS POR ID");
+    const { idRaza } = req.params;
+   
+    res.send(`el detalle del usuario ${idRaza}`);
 };
 
 const createDogsHandler = (req, res) => {
