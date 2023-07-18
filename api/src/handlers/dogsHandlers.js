@@ -1,13 +1,16 @@
 
 
 const getDogsHandler = (req, res) => {
-    res.send("NIY: ESTOY EN DOGS");
+    const {name} = req.query;
+    if(name !== undefined) {
+        res.send(`QUIERO EL DETALLE DE LOS PERROS ${name}`)
+    }
+    else {
+
+        res.send("NIY: se muestran todas las razas");
+    }
 }
 
-const getDogsByNameHandler = (req, res) => {
-    const {name} = req.query;
-    res.send(`NIY:ESTOY EN DOGS POR NOMBRE: ${name}`)
-};
 
 const getDogsByIdHandler = (req, res) => {
     const { idRaza } = req.params;
@@ -21,7 +24,6 @@ const createDogsHandler = (req, res) => {
 
 module.exports = {
     getDogsHandler,
-    getDogsByNameHandler,
     getDogsByIdHandler,
     createDogsHandler,
 }
