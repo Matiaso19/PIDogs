@@ -1,10 +1,10 @@
 const {Router} = require('express');
+const getTemperamentHandler = require('../handlers/temperamentsHandlers')
 
 const temperamentRouter = Router();
 
-
-temperamentRouter.get("/", (req, res) => {
-    res.send("NIY: ESTOY EN GET TEMPERAMENTOS")
-});
+temperamentRouter.get("/", getTemperamentHandler)
 
 module.exports = temperamentRouter;
+
+
