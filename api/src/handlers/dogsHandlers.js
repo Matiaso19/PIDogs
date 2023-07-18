@@ -19,7 +19,14 @@ const getDogsByIdHandler = (req, res) => {
 };
 
 const createDogsHandler = (req, res) => {
-    res.send("NIY:ESTOY EN CREACION DE DOGS")
+    const {imagen,nombre,altura, peso, añosDeVida} = req.body;
+    res.send(`Creando un nuevo dog con los datos: 
+    imagen: ${imagen},
+    nombre: ${nombre},
+    altura: ${altura},
+    peso: ${peso},
+    añosDeVida: ${añosDeVida},
+    `)
 };
 
 module.exports = {
