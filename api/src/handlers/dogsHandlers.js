@@ -1,3 +1,4 @@
+const {createDog} = require("../controllers/dogsController");
 
 
 const getDogsHandler = (req, res) => {
@@ -12,21 +13,29 @@ const getDogsHandler = (req, res) => {
 }
 
 
-const getDogsByIdHandler = (req, res) => {
+const getDogsByIdHandler = async(req, res) => {
     const { idRaza } = req.params;
-   
-    res.send(`el detalle del usuario ${idRaza}`);
+
+    try {
+        const dog = await getDogByID(idRaza);
+        res.status(200).json(dog)
+        
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
 };
 
-const createDogsHandler = (req, res) => {
-    const {imagen,nombre,altura, peso, añosDeVida} = req.body;
-    res.send(`Creando un nuevo dog con los datos: 
-    imagen: ${imagen},
-    nombre: ${nombre},
-    altura: ${altura},
-    peso: ${peso},
-    añosDeVida: ${añosDeVida},
-    `)
+const createDogsHandler = async (req, res) => {
+    const {image,name,weight, height, life_span} = req.body;
+    try {
+
+        const newDog = await createDog(image,name,weight, height, life_span);
+
+        res.status(201).json(newDog);
+    } catch (error) {
+        res.status(400).json({error: error.message});
+    }
+    
 };
 
 module.exports = {
