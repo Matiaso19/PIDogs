@@ -1,23 +1,26 @@
-const {createDog} = require("../controllers/dogsController");
+const {createDog, getDogByID, getDogByName, getAllDogs} = require("../controllers/dogsController");
 
 
-const getDogsHandler = (req, res) => {
+const getDogsHandler = async (req, res) => {
     const {name} = req.query;
-    if(name !== undefined) {
-        res.send(`QUIERO EL DETALLE DE LOS PERROS ${name}`)
-    }
-    else {
-
-        res.send("NIY: se muestran todas las razas");
-    }
+    
+        // si tengo name entonces utilizo dog>ByName, sino traigo todos
+        const resultado = name ? await getDogByName(name) : await getAllDogs()
+        res.status(200).json(resultado)
+        
+    
+    
 }
 
 
 const getDogsByIdHandler = async(req, res) => {
     const { idRaza } = req.params;
+    //me fijo con la funcion isNaN si el id que me pasaron es de la BDD o de la API y le paso ese dato (buscar) a getdogbyID
+    const buscar = isNaN(idRaza) ? "bdd" : "api"
 
     try {
-        const dog = await getDogByID(idRaza);
+        
+        const dog = await getDogByID(idRaza, buscar);
         res.status(200).json(dog)
         
     } catch (error) {

@@ -13,6 +13,7 @@ module.exports = (sequelize) => {
    },
    image: {
     type: DataTypes.STRING,
+    isUrl: true,
     allowNull: true,
    },
    name: {
@@ -30,6 +31,12 @@ module.exports = (sequelize) => {
    life_span: {
     type: DataTypes.INTEGER,
     allowNull: false
+   },
+   created: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: true
+
    }
    
   }, {
