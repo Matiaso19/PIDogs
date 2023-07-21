@@ -5,16 +5,31 @@ const URL = 'https://api.thedogapi.com/v1/breeds';
 const axios = require('axios');
 const {Op} = require('sequelize')
 
+
 const cleanArray = (array) => {
     const limpio = array.map(elemento => {
         return {
             id: elemento.id,
             image: elemento.image.url,
             name: elemento.name,
-            heigth: elemento.height,
-            weight: elemento.weight,
+            heigth: elemento.height.metric,
+            weight: elemento.weight.metric,
             life_span: elemento.life_span,
             created: false
+        }
+    })
+    return limpio;
+}
+const cleanArrayDetail = (array) => {
+    const limpio = array.map(elemento => {
+        return {
+            id: elemento.id,
+            image: elemento.image.url,
+            name: elemento.name,
+            heigth: elemento.height.metric,
+            weight: elemento.weight.metric,
+            Temperament: elemento.temperament, 
+            life_span: elemento.life_span,
         }
     })
     return limpio;
@@ -26,33 +41,21 @@ const createDog = async (image,name,weight, height, life_span) => {
 };
 
 const getDogByID = async (idRaza, buscar) => {
-    
     let dog = {}
     if(buscar === 'api') {
-        
-        const detail = ((await axios.get(`${URL}?api_key=${API_KEY}`)).data).filter(elemento => elemento.id == idRaza)
-        
-        dog = detail.map(elemento => {
-            return {
-                Id: elemento.id, 
-                Image:elemento.image.url, 
-                Name: elemento.name, 
-                Height: elemento.height.metric, 
-                Weight: elemento.weight.metric, 
-                Temperament: elemento.temperament, 
-                Life_Span: elemento.life_span
-            }
-            })
-        
-        
-        
-
+        //buscamos en la API y filtramos segun el ID
+        const detail = ((await axios.get(`${URL}?api_key=${API_KEY}`)).data).filter(elemento => elemento.id == idRaza);
+        //limpiamos lo devuelto con una funcion
+        dog = cleanArrayDetail(detail)  
     } else {
+        //sino buscamos en la BDD
         dog = await Dog.findByPk(idRaza)
-    
     }
     return dog;
 }
+    
+        
+    
 
 const getAllDogs = async () => {
     //buscar en la BDD
