@@ -1,5 +1,10 @@
 const getTemperamentHandler = (req, res) => {
-    res.send("NIY: ESTOY EN GET TEMPERAMENTOS")
+    try {
+        const temperaments = getTemperaments();
+        
+    } catch (error) {
+        
+    }
 };
 
 

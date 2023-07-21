@@ -1,4 +1,5 @@
 const {createDog, getDogByID, getDogByName, getAllDogs} = require("../controllers/dogsController");
+const validateCreate = require('../middlewares/createValidate')
 
 
 const getDogsHandler = async (req, res) => {
@@ -8,7 +9,7 @@ const getDogsHandler = async (req, res) => {
     if(name) {
         resultado = await getDogByName(name)
     //si encuentra alguna coicidencia, que la devuelva, sino que devuelva el error correspondiente
-        const getDog = (resultado.length > 0) ? res.status(200).json(resultado) : res.send({error: "Breed not found, please try another name"})        
+        const getDog = (resultado.length > 0) ? res.status(200).json(resultado) : res.status(400).send({error: "Breed not found, please try another name"})        
       } else {
     // si no tengo name, traigo todos los perros
         resultado = await getAllDogs()
@@ -43,6 +44,8 @@ const createDogsHandler = async (req, res) => {
         const newDog = await createDog(image,name,weight, height, life_span);
 
         res.status(201).json(newDog);
+        
+
     } catch (error) {
         res.status(400).json({error: error.message});
     }
