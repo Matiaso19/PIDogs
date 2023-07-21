@@ -2,7 +2,8 @@ const { Dog } = require('../db');
 require('dotenv').config();
 const API_KEY = process.env;
 const URL = 'https://api.thedogapi.com/v1/breeds';
-const axios = require('axios')
+const axios = require('axios');
+const {Op} = require('sequelize')
 
 const cleanArray = (array) => {
     const limpio = array.map(elemento => {
@@ -25,11 +26,30 @@ const createDog = async (image,name,weight, height, life_span) => {
 };
 
 const getDogByID = async (idRaza, buscar) => {
-    let dog = {} 
+    
+    let dog = {}
     if(buscar === 'api') {
-        dog = (await axios.get(`${URL}/${idRaza}?api_key=${API_KEY}`)).data
+        
+        const detail = ((await axios.get(`${URL}?api_key=${API_KEY}`)).data).filter(elemento => elemento.id == idRaza)
+        
+        dog = detail.map(elemento => {
+            return {
+                Id: elemento.id, 
+                Image:elemento.image.url, 
+                Name: elemento.name, 
+                Height: elemento.height.metric, 
+                Weight: elemento.weight.metric, 
+                Temperament: elemento.temperament, 
+                Life_Span: elemento.life_span
+            }
+            })
+        
+        
+        
+
     } else {
         dog = await Dog.findByPk(idRaza)
+    
     }
     return dog;
 }
@@ -40,6 +60,7 @@ const getAllDogs = async () => {
     //buscar en la API
     const apiDogsCrudo = (await axios.get(`${URL}?api_key=${API_KEY}`)).data
     //limpiamos el array para traer solo lo que necesitamos
+    //console.log(apiDogsCrudo);
     
     const apiDogs = cleanArray(apiDogsCrudo);
     //unificar los datos
@@ -50,7 +71,7 @@ const getAllDogs = async () => {
 }
 const getDogByName = async (name) => {
     
-    const databaseDog = await Dog.findAll({where: {name: name} });
+    const databaseDog = await Dog.findAll({where: {name: { [Op.iLike]: `%${name}%` } } });
     
     const apiDogCrudo = (await axios.get(`${URL}?api_key=${API_KEY}`)).data;
     const apiDog = cleanArray(apiDogCrudo);

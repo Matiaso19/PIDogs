@@ -3,14 +3,22 @@ const {createDog, getDogByID, getDogByName, getAllDogs} = require("../controller
 
 const getDogsHandler = async (req, res) => {
     const {name} = req.query;
-    
-        // si tengo name entonces utilizo dog>ByName, sino traigo todos
-        const resultado = name ? await getDogByName(name) : await getAllDogs()
-        res.status(200).json(resultado)
+    let resultado = {}
+    //si tengo name, busco por nombre
+    if(name) {
+        resultado = await getDogByName(name)
+    //si encuentra alguna coicidencia, que la devuelva, sino que devuelva el error correspondiente
+        const getDog = (resultado.length > 0) ? res.status(200).json(resultado) : res.send({error: "Breed not found, please try another name"})        
+      } else {
+    // si no tengo name, traigo todos los perros
+        resultado = await getAllDogs()
+        return res.status(200).json(resultado)
+    }
+}
+        
         
     
     
-}
 
 
 const getDogsByIdHandler = async(req, res) => {
