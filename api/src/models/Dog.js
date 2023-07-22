@@ -10,15 +10,15 @@ module.exports = (sequelize) => {
     primaryKey: true,
     defaultValue: DataTypes.UUIDV4,
     allowNull: false
-   },
+   }, 
    image: {
     type: DataTypes.STRING,
-    isUrl: true,
     allowNull: true,
    },
    name: {
     type: DataTypes.STRING,
     allowNull: false,
+    unique: true,
    },
    weight: {
     type: DataTypes.INTEGER,

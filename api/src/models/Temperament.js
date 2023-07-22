@@ -4,12 +4,14 @@ module.exports = (sequelize) => {
     sequelize.define('temperament', {
         id: {
             type: DataTypes.INTEGER,
-            autoIncrement: true
+            autoIncrement: true,
+            primaryKey: true
+
         },
         name: {
             type: DataTypes.STRING,
             allowNull: false,
-            primaryKey: true
+            unique: true
 
         }
 
