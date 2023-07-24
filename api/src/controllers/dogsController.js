@@ -28,10 +28,10 @@ const cleanArrayDetail = (array) => {
             name: elemento.name,
             heigth: elemento.height.metric,
             weight: elemento.weight.metric,
-            Temperament: elemento.temperament, 
+            Temperament: elemento.temperament?.split(','), 
             life_span: elemento.life_span,
         }
-    })
+    });
     return limpio;
 }
 
