@@ -1,15 +1,24 @@
+import * as React from 'react';
+import { useLocation } from 'react-router-dom';
+import NavBar from "./components/NavBar/NavBar";
 import { Home, Detail, Form, Landing } from "./views";
 import { Route } from "react-router-dom";
 
 function App() {
+
+  const location = useLocation();
+
+
   return (
     <div className="App">
-      {/* de esta forma no se le pueden pasar props al componente*/}
+      {location.pathname !== '/' && <NavBar/>}
+      
+      
       <Route exact path='/' component = {Landing}/>
+      <Route path='/home' render = {()=><Home/>} /> 
       <Route exact path='/detail' component = {Detail}/>
       <Route exact path='/form' component = {Form}/>
-      {/* de esta forma si le puedo pasar props al componente*/}
-      <Route path='/home' render = {()=><Home/>} /> 
+      
       
       
       
