@@ -22,9 +22,10 @@ const getTemperaments = async () => {
 
     const uniqueTemperament = [...new Set(allTemperaments)] 
     for (const temp of uniqueTemperament) {
-        await Temperament.create({name: temp})
+        await Temperament.findOrCreate({where: {name: temp}})
     }
-    return uniqueTemperament
+    const getAllDbTemperaments = await Temperament.findAll();
+    return getAllDbTemperaments;
 }
 
 module.exports = getTemperaments;

@@ -35,8 +35,9 @@ const cleanArrayDetail = (array) => {
     return limpio;
 }
 
-const createDog = async (image,name,weight, height, life_span) => {
-    const newDog = await Dog.create({image,name,weight, height, life_span});
+const createDog = async (name,weightMin,weightMax, heightMin , heightMax, lifeSpan) => {
+
+    const newDog = await Dog.create({name,weightMin,weightMax, heightMin , heightMax, lifeSpan});
     return newDog;
 };
 
@@ -60,6 +61,7 @@ const getDogByID = async (idRaza, buscar) => {
 const getAllDogs = async () => {
     //buscar en la BDD
     const databaseDogs = await Dog.findAll();
+    
     //buscar en la API
     const apiDogsCrudo = (await axios.get(`${URL}?api_key=${API_KEY}`)).data
     //limpiamos el array para traer solo lo que necesitamos
