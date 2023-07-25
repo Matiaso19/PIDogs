@@ -58,26 +58,26 @@ const Form = () => {
 
             <div>
             <label>Heigth Min: </label>
-            <input type='number' value={form.height_min} onChange={changeHandler}name='heightMin'></input>
+            <input type='number' value={form.heightMin} onChange={changeHandler}name='heightMin'></input>
             {errors.heightMin && <span>{errors.heightMin}</span>}
             </div>
             <div>
             <label>Heigth Max: </label>
-            <input type='number' value={form.height_max} onChange={changeHandler} name='heightMax'></input>
+            <input type='number' value={form.heightMax} onChange={changeHandler} name='heightMax'></input>
             </div>
 
             <div>
             <label>Weight Min: </label>
-            <input type='number' value={form.weight_min} onChange={changeHandler} name='weightMin'></input>
+            <input type='number' value={form.weightMin} onChange={changeHandler} name='weightMin'></input>
             </div>
             <div>
             <label>Weight Max: </label>
-            <input type='number' value={form.weight_max} onChange={changeHandler} name='weightMax'></input>
+            <input type='number' value={form.weightMax} onChange={changeHandler} name='weightMax'></input>
             </div>
 
             <div>
             <label>Life Span: </label>
-            <input type='number' value={form.life_Span} onChange={changeHandler} name='lifeSpan'></input>
+            <input type='number' value={form.lifeSpan} onChange={changeHandler} name='lifeSpan'></input>
             </div>
 
             <div>
