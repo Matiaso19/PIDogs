@@ -4,7 +4,7 @@ import {useSelector} from 'react-redux'
 
 const CardsContainer = () => {
     const dogs = useSelector(state=>state.dogs)
-
+console.log(dogs);
     return(
         <div className={style.container}>
             {dogs.map(dog => {
@@ -15,6 +15,7 @@ const CardsContainer = () => {
                 name = {dog.name}
 		        heigth = {dog.heigth}
 		        weight = {dog.weight}
+                temperaments = {dog.temperament}
 		        life_span = {dog.life_span}               
 
                 />

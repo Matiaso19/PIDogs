@@ -2,6 +2,20 @@ import { useEffect, useState } from 'react';
 import style from './Form.module.css';
 import axios from 'axios';
 
+
+//chip
+const Chip = ({ label, onDelete }) => {
+    return (
+      <div className={style.chip}>
+        {label}
+        <span className={style.closeIcon} onClick={onDelete}>
+          &times;
+        </span>
+      </div>
+    );
+  };
+
+
 const Form = () => {
     const [form, setForm] = useState({
         name: '',
@@ -10,7 +24,8 @@ const Form = () => {
         weightMin: '',
         weightMax: '',
         lifeSpan: '',
-        temperaments: ''
+        temperaments: [],
+        image:''
     });
     const [errors, setErrors] = useState({
         name: '',
@@ -19,12 +34,32 @@ const Form = () => {
         weightMin: '',
         weightMax: '',
         lifeSpan: '',
-        temperaments: ''
+        temperaments: [],
+        image: ''
     })
+    const [selectedTemperaments, setSelectedTemperaments] = useState([]);
+    const [temperamentList, setTemperamentList] = useState([]);
+    
+    const handleTemperamentsChange = (event) => {
+       const selectedOptions = Array.from(event.target.selectedOptions, (option) => option.value);
+       setSelectedTemperaments((prevSelectedTemperaments) => [...prevSelectedTemperaments, ...selectedOptions]);
+       setForm({...form, temperaments: selectedTemperaments})
+        
+
+    
+    }
+
+    const handleDeleteTemperament = (temperament) => {
+        setSelectedTemperaments(function(oldTemperaments){ 
+            return oldTemperaments.filter((temp)=> temp !== temperament)
+        });
+    }
     const changeHandler = (event) => {
         const property = event.target.name;
         const value = event.target.value;
+        
         validate({...form, [property]: value})
+
         setForm({...form, [property]: value})
     }
     const validate = (form) => {
@@ -41,13 +76,17 @@ const Form = () => {
         .catch(err => alert(err))
 
     }
-    const [temperamentList, setTemperamentList] = useState([]);
     
     useEffect(() => {
         axios.get('http://localhost:3001/temperaments')
         .then((res)=> setTemperamentList(res.data))
         .catch((err) => alert(err))
     }, []);
+
+    
+    
+    
+
 
     return (
         <form onSubmit={submitHandler}>
@@ -79,17 +118,35 @@ const Form = () => {
             <label>Life Span: </label>
             <input type='number' value={form.lifeSpan} onChange={changeHandler} name='lifeSpan'></input>
             </div>
+            <div>
+            <label>Image: </label>
+            <input type='text' value={form.image} onChange={changeHandler} name='image'></input>
+            </div>
 
             <div>
             <label>Temperaments: </label>
-            <select onChange={changeHandler} name='temperaments'>
-
-            <option value=''>Select a Temperament</option>
+             <select multiple options={temperamentList} onChange={handleTemperamentsChange} value={selectedTemperaments} name='temperaments'>
             {temperamentList.map((temperament) => (
-                <option key={temperament.id} value={temperament.name}> {temperament.name}</option>
-                ))}
+                <option key={temperament.id} value={temperament.name}>
+                    {temperament.name}
+                </option>
+            ))}
             </select>
+            
             </div>
+            {/*mostrar los temperamentos como chips*/ }
+            <div>
+            <h3>Selected Temperaments: </h3>
+            <div className={style.chipContainer}>
+                {selectedTemperaments.map((temperament)=> (
+                    <Chip key={temperament} label={temperament} onDelete={()=> handleDeleteTemperament(temperament)}></Chip>
+                ))}
+            </div>
+            </div>
+            
+            
+            
+            
 
             <div>
             <button type='submit'>CREATE NEW DOG</button>
