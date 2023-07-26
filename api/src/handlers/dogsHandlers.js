@@ -38,7 +38,7 @@ const getDogsByIdHandler = async(req, res) => {
 };
 
 const createDogsHandler = async (req, res) => {
-    const {name,weightMin,weightMax, heightMin , heightMax, lifeSpan} = req.body;
+    const {name,weightMin,weightMax, heightMin , heightMax, lifeSpan, temperaments, image} = req.body;
     /*const heightMinInt = parseInt(heightMin);
     const heightMaxInt = parseInt(heightMax);
     const weightMinInt = parseInt(weightMin);
@@ -46,7 +46,7 @@ const createDogsHandler = async (req, res) => {
     const lifeSpanInt = parseInt(lifeSpan);*/
     try {
 
-        const newDog = await createDog(name,weightMin,weightMax, heightMin , heightMax, lifeSpan);
+        const newDog = await createDog(name,weightMin,weightMax, heightMin , heightMax, lifeSpan, temperaments, image);
 
         res.status(201).json('La raza fue creada exitosamente');
         

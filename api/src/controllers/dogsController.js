@@ -1,10 +1,29 @@
-const { Dog } = require('../db');
+const { Dog, Temperament } = require('../db');
 require('dotenv').config();
 const API_KEY = process.env;
 const URL = 'https://api.thedogapi.com/v1/breeds';
 const axios = require('axios');
-const {Op} = require('sequelize')
+const {Op} = require('sequelize');
 
+const cleanArraydb = (array) => {
+    const limpio = array.map(elemento => {
+        console.log(array);
+        return {
+            id: elemento.id,
+            
+            name: elemento.name,
+            height: `${elemento.heightMin} - ${elemento.heightMax}` ,
+            weight: `${elemento.weightMin} - ${elemento.weightMax}`,
+            life_span: elemento.lifeSpan,
+            temperament: elemento.dataValues.temperaments.map(elem => elem.name).join(', '),
+            image: elemento.image
+            
+            
+        }
+    })
+   console.log(limpio);
+    return limpio;
+}
 
 const cleanArray = (array) => {
     const limpio = array.map(elemento => {
@@ -15,6 +34,7 @@ const cleanArray = (array) => {
             heigth: elemento.height.metric,
             weight: elemento.weight.metric,
             life_span: elemento.life_span,
+            temperament: elemento.temperament,
             created: false
         }
     })
@@ -35,9 +55,10 @@ const cleanArrayDetail = (array) => {
     return limpio;
 }
 
-const createDog = async (name,weightMin,weightMax, heightMin , heightMax, lifeSpan) => {
+const createDog = async (name,weightMin,weightMax, heightMin , heightMax, lifeSpan, temperaments, image) => {
 
-    const newDog = await Dog.create({name,weightMin,weightMax, heightMin , heightMax, lifeSpan});
+    const newDog = await Dog.create({name,weightMin,weightMax, heightMin , heightMax, lifeSpan, image});
+    await newDog.addTemperaments(temperaments)
     return newDog;
 };
 
@@ -60,7 +81,17 @@ const getDogByID = async (idRaza, buscar) => {
 
 const getAllDogs = async () => {
     //buscar en la BDD
-    const databaseDogs = await Dog.findAll();
+    const databaseDogsCrudo = await Dog.findAll({
+        include: [{
+            model: Temperament,
+            attributes: ['name'],
+            through: {
+                attributes :[]
+            }
+        }]
+    });
+    //console.log(databaseDogsCrudo);
+    const databaseDogs = cleanArraydb(databaseDogsCrudo);
     
     //buscar en la API
     const apiDogsCrudo = (await axios.get(`${URL}?api_key=${API_KEY}`)).data
