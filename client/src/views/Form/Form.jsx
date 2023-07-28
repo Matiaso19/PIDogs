@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import style from './Form.module.css';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 
 //chip
@@ -17,6 +18,7 @@ const Chip = ({ label, onDelete }) => {
 
 
 const Form = () => {
+    const history = useHistory();
     const [form, setForm] = useState({
         name: '',
         heightMin: '',
@@ -34,17 +36,24 @@ const Form = () => {
         weightMin: '',
         weightMax: '',
         lifeSpan: '',
-        temperaments: [],
+        temperaments: '',
         image: ''
     })
     const [selectedTemperaments, setSelectedTemperaments] = useState([]);
     const [temperamentList, setTemperamentList] = useState([]);
     
+    useEffect(() => {
+        setForm((prevForm) => ({
+            ...prevForm,
+            temperaments: selectedTemperaments
+        }));
+    }, [selectedTemperaments]);
+
     const handleTemperamentsChange = (event) => {
        const selectedOptions = Array.from(event.target.selectedOptions, (option) => option.value);
        setSelectedTemperaments((prevSelectedTemperaments) => [...prevSelectedTemperaments, ...selectedOptions]);
-       setForm({...form, temperaments: selectedTemperaments})
-        
+       //setForm({...form, temperaments: selectedTemperaments})
+    
 
     
     }
@@ -54,28 +63,98 @@ const Form = () => {
             return oldTemperaments.filter((temp)=> temp !== temperament)
         });
     }
+    
+
     const changeHandler = (event) => {
         const property = event.target.name;
         const value = event.target.value;
         
-        validate({...form, [property]: value})
+       validate({...form, [property]: value})
 
         setForm({...form, [property]: value})
     }
+
+
+
     const validate = (form) => {
-        if(form.heightMax && form.heightMin > form.heightMax) {setErrors({...errors, heightMin: 'La altura minima no puede ser mayor que la altura maxima'});
-    } else {
-        setErrors({...errors, heightMin: ''})
-    }
-        return errors;
-    }
+        const newErrors = {};
+      
+        if (form.heightMax && form.heightMin > form.heightMax) {
+          newErrors.heightMin = 'La altura mínima no puede ser mayor que la altura máxima';
+        } else {
+          newErrors.heightMin = '';
+        }
+      
+        if (form.weightMax && form.weightMin > form.weightMax) {
+          newErrors.weightMin = 'El peso mínimo no puede ser mayor que el peso máximo';
+        } else {
+          newErrors.weightMin = '';
+        }
+      
+        if (form.name && !(/^[A-Za-z]+$/).test(form.name)) {
+          newErrors.name = 'El nombre solo puede contener letras, no números ni caracteres especiales';
+        } else {
+          newErrors.name = '';
+        }
+        
+        
+        setErrors(newErrors);
+        
+        return newErrors;
+      }
+      
+
     const submitHandler = (event) => {
         event.preventDefault();
-        const response = axios.post('http://localhost:3001/dogs', form)
-        .then(res => alert(res))
-        .catch(err => alert(err))
+        setErrors(validate(form))
+        
+       
+    if(!Object.values(errors).every((value)=> value === '')) { alert('Hay errores en los datos cargados o hay campos sin completar');
+        
+    }
+        else if (
+            form.name === '' ||
+            form.heightMin === '' ||
+            form.heightMax === '' ||
+            form.weightMin === '' ||
+            form.weightMax === '' ||
+            form.lifeSpan === '' 
+            //!form.temperaments.length
+        )
+         { 
+            return alert('Hay campos sin completar')
+        } else {
+            try {
+                const response = axios.post('http://localhost:3001/dogs', form)
+                   .then(res => alert('La raza fue creada exitosamente'))
+                   .catch(err => alert(err))
+                setForm({
+                    name: '',
+                    heightMin: '',
+                    heightMax: '',
+                    weightMin: '',
+                    weightMax: '',
+                    lifeSpan: '',
+                    temperaments: [],
+                    image:''
+                })
+            
+               
+                
+            } catch (err) {
+                alert(err)
+            }
+
+        }
+
 
     }
+
+        
+
+            
+            
+
     
     useEffect(() => {
         axios.get('http://localhost:3001/temperaments')
@@ -93,6 +172,7 @@ const Form = () => {
             <div>
             <label>Name: </label>
             <input type='text' value={form.name} onChange={changeHandler} name='name'></input>
+            {errors.name && <span>{errors.name}</span>}
             </div>
 
             <div>
@@ -108,6 +188,7 @@ const Form = () => {
             <div>
             <label>Weight Min: </label>
             <input type='number' value={form.weightMin} onChange={changeHandler} name='weightMin'></input>
+            {errors.weightMin && <span>{errors.weightMin}</span>}
             </div>
             <div>
             <label>Weight Max: </label>

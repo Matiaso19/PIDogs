@@ -10,8 +10,8 @@ const Home = () => {
         dispatch(getDogs())
     }, [])
     return (
-        <>
         
+        <>
         <CardsContainer/>
         </>
     )

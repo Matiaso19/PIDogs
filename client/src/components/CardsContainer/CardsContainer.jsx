@@ -1,10 +1,11 @@
 import Card from '../Card/Card'
 import style from './CardsContainer.module.css'
 import {useSelector} from 'react-redux'
+import { Paginado } from '../Paginado/Paginado'
 
 const CardsContainer = () => {
     const dogs = useSelector(state=>state.dogs)
-console.log(dogs);
+
     return(
         <div className={style.container}>
             {dogs.map(dog => {
@@ -13,14 +14,16 @@ console.log(dogs);
                 image = {dog.image}
                 id= {dog.id}
                 name = {dog.name}
-		        heigth = {dog.heigth}
-		        weight = {dog.weight}
-                temperaments = {dog.temperament}
+		        height = {`${dog.heightMin} cm - ${dog.heightMax} cm`}
+		        weight = {`${dog.weightMin} kg - ${dog.weightMax} kg`}
+		       
+                temperaments =  {dog.temperament}
 		        life_span = {dog.life_span}               
 
                 />
             })}
         </div>
+        
     )
 }
 
