@@ -3,10 +3,11 @@ import style from './Card.module.css'
 const Card = (props) => {
     return(
         <div className={style.card}>
-            <img className={style.image} src={props.image} alt={props.name}/>
+            <div className={style.imageArea}></div>
+            <img className={style.dogImage} src={props.image} alt={props.name}/>
             <p>Name: {props.name}</p>
             <p>Temperament: {props.temperaments}</p>
-            <p>Peso: {props.weight}</p>
+            <p>Weight: {props.weight}</p>
 
 
 
