@@ -7,13 +7,15 @@ const {Op} = require('sequelize');
 
 const cleanArraydb = (array) => {
     const limpio = array.map(elemento => {
-        console.log(array);
+        
         return {
-            id: elemento.id,
             
+            id: elemento.id,
             name: elemento.name,
-            height: `${elemento.heightMin} - ${elemento.heightMax}` ,
-            weight: `${elemento.weightMin} - ${elemento.weightMax}`,
+            heightMin: elemento.heightMin,
+            heightMax: elemento.heightMax,
+            weightMin: elemento.weightMin,
+            weightMax: elemento.weightMax,
             life_span: elemento.lifeSpan,
             temperament: elemento.dataValues.temperaments.map(elem => elem.name).join(', '),
             image: elemento.image
@@ -21,19 +23,34 @@ const cleanArraydb = (array) => {
             
         }
     })
-   console.log(limpio);
+
     return limpio;
 }
 
 const cleanArray = (array) => {
     const limpio = array.map(elemento => {
+        let weight = elemento.weight.metric.split('-')
+        let height = elemento.height.metric.split('-')
+        let life_span = elemento.life_span.split('-')
+        
+        let weightMin = parseInt(weight[0])
+        let weightMax = parseInt(weight[1])
+        let heightMin = parseInt(height[0])
+        let heightMax = parseInt(height[1])
+        let life_span_min = parseInt(life_span[0])
+        let life_span_max = parseInt(life_span[1])
+        
+        
         return {
             id: elemento.id,
             image: elemento.image.url,
             name: elemento.name,
-            heigth: elemento.height.metric,
-            weight: elemento.weight.metric,
-            life_span: elemento.life_span,
+            heigthMin: heightMin ? heightMin : heightMax,
+            heigthMax: heightMax ? heightMax : heightMin,
+            weightMin: weightMin ? weightMin : weightMax,
+            weightMax: weightMax ? weightMax : weightMin,
+            life_span_min: life_span_min ? life_span_min : life_span_max,
+            life_span_max: life_span_max ? life_span_max : life_span_min,
             temperament: elemento.temperament,
             created: false
         }
