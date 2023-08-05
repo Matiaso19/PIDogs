@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import style from './Form.module.css';
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
+
 
 
 //chip
@@ -18,7 +18,7 @@ const Chip = ({ label, onDelete }) => {
 
 
 const Form = () => {
-    const history = useHistory();
+   
     const [form, setForm] = useState({
         name: '',
         heightMin: '',
@@ -27,7 +27,8 @@ const Form = () => {
         weightMax: '',
         lifeSpan: '',
         temperaments: [],
-        image:''
+        image:'',
+        
     });
     const [errors, setErrors] = useState({
         name: '',
@@ -80,19 +81,19 @@ const Form = () => {
         const newErrors = {};
       
         if (form.heightMax && form.heightMin > form.heightMax) {
-          newErrors.heightMin = 'La altura mínima no puede ser mayor que la altura máxima';
+          newErrors.heightMin = 'The minimum height cannot be greater than the maximum height';
         } else {
           newErrors.heightMin = '';
         }
       
         if (form.weightMax && form.weightMin > form.weightMax) {
-          newErrors.weightMin = 'El peso mínimo no puede ser mayor que el peso máximo';
+          newErrors.weightMin = 'The minimum weight cannot be greater than the maximum weight';
         } else {
           newErrors.weightMin = '';
         }
       
-        if (form.name && !(/^[A-Za-z]+$/).test(form.name)) {
-          newErrors.name = 'El nombre solo puede contener letras, no números ni caracteres especiales';
+        if (form.name && !(/^[A-Z][a-zA-Z]*$/).test(form.name)) {
+          newErrors.name = 'The Name must begin with a capital letter and must not contain numbers or special characters';
         } else {
           newErrors.name = '';
         }
@@ -109,7 +110,7 @@ const Form = () => {
         setErrors(validate(form))
         
        
-    if(!Object.values(errors).every((value)=> value === '')) { alert('Hay errores en los datos cargados o hay campos sin completar');
+    if(!Object.values(errors).every((value)=> value === '')) { alert('There are errors in the uploaded data or there are fields not completed');
         
     }
         else if (
@@ -122,11 +123,11 @@ const Form = () => {
             //!form.temperaments.length
         )
          { 
-            return alert('Hay campos sin completar')
+            return alert('All fields must be complete')
         } else {
             try {
                 const response = axios.post('http://localhost:3001/dogs', form)
-                   .then(res => alert('La raza fue creada exitosamente'))
+                   .then(res => alert('Your dog has been created successfully'))
                    .catch(err => alert(err))
                 setForm({
                     name: '',
@@ -138,6 +139,7 @@ const Form = () => {
                     temperaments: [],
                     image:''
                 })
+               
             
                
                 
@@ -161,7 +163,7 @@ const Form = () => {
         .then((res)=> setTemperamentList(res.data))
         .catch((err) => alert(err))
     }, []);
-
+    
     
     
     

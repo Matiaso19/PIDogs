@@ -1,0 +1,8 @@
+.homeContainer {
+    background-image: url(../../images/10219-cesped.jpg);
+    
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100wh;
+    height: 100vh;
+}
