@@ -1,4 +1,4 @@
-import { GET_DOGS, FILTER_DOGS, GET_DOGS_BY_NAME, GET_DOG_DETAIL, ORDER_DOGS, FILTER_TEMPERAMENTS, GET_TEMPERAMENTS, FILTER_WEIGHT} from './types'
+import { GET_DOGS, FILTER_DOGS, GET_DOGS_BY_NAME, GET_DOG_DETAIL, ORDER_DOGS, FILTER_TEMPERAMENTS, GET_TEMPERAMENTS, FILTER_WEIGHT, DELETE_DETAILS} from './types'
 
 
 const initialState = {
@@ -81,6 +81,11 @@ const rootReducer = (state=initialState, action) => {
                     ...state,
                     details: action.payload
                 }
+        case DELETE_DETAILS: 
+        return {
+          ...state,
+          details: []
+        }
             
         default:
             return {...state}

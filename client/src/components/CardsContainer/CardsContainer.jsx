@@ -12,7 +12,7 @@ const CardsContainer = () => {
     const dispatch = useDispatch();
     
     let dogs = useSelector(state=>state.dogs)
-    let allDogs = useSelector(state => state.allDogs)
+    
     let temperaments = useSelector((state) => state.temperaments).sort(
         function (a, b) {
             if(a < b) return -1

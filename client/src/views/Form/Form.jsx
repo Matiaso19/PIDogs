@@ -126,7 +126,7 @@ const Form = () => {
             return alert('All fields must be complete')
         } else {
             try {
-                const response = axios.post('http://localhost:3001/dogs', form)
+                axios.post('http://localhost:3001/dogs', form)
                    .then(res => alert('Your dog has been created successfully'))
                    .catch(err => alert(err))
                 setForm({

@@ -1,4 +1,4 @@
-import { GET_DOGS, FILTER_DOGS, GET_DOGS_BY_NAME, GET_DOG_DETAIL, ORDER_DOGS, FILTER_TEMPERAMENTS, FILTER_WEIGHT, GET_TEMPERAMENTS} from './types';
+import { GET_DOGS, FILTER_DOGS, GET_DOGS_BY_NAME, GET_DOG_DETAIL, ORDER_DOGS, FILTER_TEMPERAMENTS, FILTER_WEIGHT, GET_TEMPERAMENTS, DELETE_DETAILS} from './types';
 import axios from 'axios'
 const URL = 'http://localhost:3001/'
 
@@ -59,5 +59,13 @@ export const getDogDetail = (id) => {
         const dog = apiData.data;
         dispatch({ type: GET_DOG_DETAIL, payload: dog})
     
+    }
+}
+export const deleteDetails = () => {
+    return async function (dispatch) {
+        
+        dispatch({
+            type: DELETE_DETAILS
+        })
     }
 }

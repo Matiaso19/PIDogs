@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect} from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import { getDogDetail } from '../../redux/actions';
+import { useHistory } from 'react-router-dom';
+import { deleteDetails, getDogDetail } from '../../redux/actions';
 import {useDispatch, useSelector} from 'react-redux';
 import style from './Detail.module.css'
 
@@ -11,28 +11,31 @@ import style from './Detail.module.css'
 
 const Detail = () => {
 
+
     const {idRaza} = useParams();
-   
+    
      
-   
+    
     const myDog = useSelector((state)=>state.details)
     const dispatch = useDispatch();
-    
-    console.log(myDog);
+    const goBack = useHistory();
+    const handleBack = () => {
+        goBack.push('/home')
+    }
     
     useEffect(() => {
-        dispatch(getDogDetail(idRaza))
-    }, [idRaza])
+        dispatch(getDogDetail(idRaza));
+        return () => dispatch(deleteDetails())
+    }, [dispatch,idRaza])
     
-    /*const buscar = isNaN(idRaza) ? "bdd" : "api"
-    if(buscar === "api") {*/
-
-        const temperaments = myDog.temperament;
+    
+        
         return (
             <>
+            
             {myDog.map(dog =>{
                 return (
-                    <div className={style.card}>
+                    <div className={style.card} key={dog.id}>
 
                     <div key= {dog.id} className={style.imageArea}>
     
@@ -40,36 +43,25 @@ const Detail = () => {
                     <h3>Name: {dog.name}</h3>
                     <h3>Id: {dog.id}</h3>
                     
-                    <h3>Height: {dog.height}</h3>
-                    <h3>Weight: {dog.weight}</h3>
-                    <h3>Temperament: {dog.Temperament.join(', ')}</h3>
+                    <h3>Height: {`${dog.heightMin} cm - ${dog.heightMax} cm`}</h3>
+                    <h3>Weight: {`${dog.weightMin} kg - ${dog.weightMax} kg`}</h3>
+                    <h3>Temperament: {dog.created
+                    ? dog.temperament.map((elem)=>elem.name).join(', ')
+                    : dog.temperament
+                }</h3>
                     <h3>Life_Span: {dog.life_span}</h3>
                     </div>
+                    <button onClick={handleBack}>GO BACK HOME</button>
                     </div>
                 )
             })}
-            <div>
-                <button >GO BACK HOME</button>
-            </div>
+            
+                
+            
             </>
         )
     
-    /*if(buscar === 'bdd') {
-        //console.log(myDog);
-        return (
-            <>
-            {myDog.map((dog) => {
-                return (
-                    <div key={dog.dataValues.id}>
-                    <img src= {dog.dataValues.image} alt={dog.dataValues.name} />
-                    <h1>Name: {dog.dataValues.name}</h1>
-                    <h3>Id: {dog.dataValues.id}</h3>
-                    </div>
-                )
-            })}
-            </>
-        )
-    }*/
+    
   
 }
 

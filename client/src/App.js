@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 import NavBar from "./components/NavBar/NavBar";
 import { Home, Detail, Form, Landing } from "./views";
-import { Route, Switch } from "react-router-dom";
+import { Route } from "react-router-dom";
 
 function App() {
 
