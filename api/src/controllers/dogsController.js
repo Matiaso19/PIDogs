@@ -32,14 +32,15 @@ const cleanArraydbDetail = (array) => {
         return {
             
             id: elemento.id,
-            /*name: elemento.name,
+            image: elemento.image,
+            name: elemento.name,
             heightMin: elemento.heightMin,
             heightMax: elemento.heightMax,
             weightMin: elemento.weightMin,
             weightMax: elemento.weightMax,
             life_span: elemento.lifeSpan,
-            temperament: elemento.dataValues.temperaments.map(elem => elem.name).join(', '),
-            image: elemento.image*/
+            temperament: elemento.dataValues.temperaments,
+            created: elemento.created
             
             
         }
@@ -66,8 +67,8 @@ const cleanArray = (array) => {
             id: elemento.id,
             image: elemento.image.url,
             name: elemento.name,
-            heigthMin: heightMin ? heightMin : heightMax,
-            heigthMax: heightMax ? heightMax : heightMin,
+            heightMin: heightMin ? heightMin : heightMax,
+            heightMax: heightMax ? heightMax : heightMin,
             weightMin: weightMin ? weightMin : weightMax,
             weightMax: weightMax ? weightMax : weightMin,
             life_span_min: life_span_min ? life_span_min : life_span_max,
@@ -83,14 +84,22 @@ const cleanArrayDetail = (array) => {
         let weight = elemento.weight.metric.split('-')
         let height = elemento.height.metric.split('-')
         let life_span = elemento.life_span.split('-')
-
+        
+        let weightMin = parseInt(weight[0])
+        let weightMax = parseInt(weight[1])
+        let heightMin = parseInt(height[0])
+        let heightMax = parseInt(height[1])
+        
         return {
             id: elemento.id,
             image: elemento.image.url,
             name: elemento.name,
-            height: elemento.height.metric,
-            weight: elemento.weight.metric,
-            Temperament: elemento.temperament?.split(','), 
+            heightMin: heightMin ? heightMin : heightMax,
+            heightMax: heightMax ? heightMax : heightMin,
+            weightMin: weightMin ? weightMin : weightMax,
+            weightMax: weightMax ? weightMax : weightMin,
+            
+            temperament: elemento.temperament,
             life_span: elemento.life_span,
         }
     });
@@ -110,11 +119,15 @@ const getDogByID = async (idRaza, buscar) => {
         //buscamos en la API y filtramos segun el ID
         const detail = ((await axios.get(`${URL}?api_key=${API_KEY}`)).data).filter(elemento => elemento.id == idRaza);
         //limpiamos lo devuelto con una funcion
+
         dog = cleanArrayDetail(detail)  
+        
     } else {
         //sino buscamos en la BDD
-        dog = await Dog.findByPk(idRaza, {include:{model: Temperament, attributes:["name"], through: {attributes:[]}}})
-        //dog = cleanArraydbDetail(detail)
+        const dogBuscado = await Dog.findByPk(idRaza, {include:{model: Temperament, attributes:["name"], through: {attributes:[]}}})
+     
+        const foundDog = [dogBuscado]
+        dog = cleanArraydbDetail(foundDog)
     }
     return dog;
 }
