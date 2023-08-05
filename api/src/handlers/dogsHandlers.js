@@ -9,6 +9,7 @@ const getDogsHandler = async (req, res) => {
     if(name) {
         resultado = await getDogByName(name)
     //si encuentra alguna coicidencia, que la devuelva, sino que devuelva el error correspondiente
+        
         const getDog = (resultado.length > 0) ? res.status(200).json(resultado) : res.status(400).send({error: "Breed not found, please try another name"})        
       } else {
     // si no tengo name, traigo todos los perros

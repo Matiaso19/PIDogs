@@ -18,7 +18,28 @@ const cleanArraydb = (array) => {
             weightMax: elemento.weightMax,
             life_span: elemento.lifeSpan,
             temperament: elemento.dataValues.temperaments.map(elem => elem.name).join(', '),
-            image: elemento.image
+            image: elemento.image,
+            created: elemento.created
+            
+        }
+    })
+
+    return limpio;
+}
+const cleanArraydbDetail = (array) => {
+    const limpio = array.map(elemento => {
+        
+        return {
+            
+            id: elemento.id,
+            /*name: elemento.name,
+            heightMin: elemento.heightMin,
+            heightMax: elemento.heightMax,
+            weightMin: elemento.weightMin,
+            weightMax: elemento.weightMax,
+            life_span: elemento.lifeSpan,
+            temperament: elemento.dataValues.temperaments.map(elem => elem.name).join(', '),
+            image: elemento.image*/
             
             
         }
@@ -59,11 +80,15 @@ const cleanArray = (array) => {
 }
 const cleanArrayDetail = (array) => {
     const limpio = array.map(elemento => {
+        let weight = elemento.weight.metric.split('-')
+        let height = elemento.height.metric.split('-')
+        let life_span = elemento.life_span.split('-')
+
         return {
             id: elemento.id,
             image: elemento.image.url,
             name: elemento.name,
-            heigth: elemento.height.metric,
+            height: elemento.height.metric,
             weight: elemento.weight.metric,
             Temperament: elemento.temperament?.split(','), 
             life_span: elemento.life_span,
@@ -88,7 +113,8 @@ const getDogByID = async (idRaza, buscar) => {
         dog = cleanArrayDetail(detail)  
     } else {
         //sino buscamos en la BDD
-        dog = await Dog.findByPk(idRaza)
+        dog = await Dog.findByPk(idRaza, {include:{model: Temperament, attributes:["name"], through: {attributes:[]}}})
+        //dog = cleanArraydbDetail(detail)
     }
     return dog;
 }
@@ -125,11 +151,11 @@ const getAllDogs = async () => {
 const getDogByName = async (name) => {
     
     const databaseDog = await Dog.findAll({where: {name: { [Op.iLike]: `%${name}%` } } });
-    
     const apiDogCrudo = (await axios.get(`${URL}?api_key=${API_KEY}`)).data;
     const apiDog = cleanArray(apiDogCrudo);
     const filteredDog = apiDog.filter(dog => dog.name.toLowerCase().includes(name.toLowerCase()));
     return  [...databaseDog, ...filteredDog]
+    
 }
 
 module.exports = {
