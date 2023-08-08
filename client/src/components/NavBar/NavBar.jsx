@@ -1,6 +1,6 @@
 import {Link} from 'react-router-dom';
 import style from './NavBar.module.css';
-import { SearchBar } from '../SearchBar/SearchBar';
+
 
 
 const NavBar = () => {
@@ -11,12 +11,7 @@ const NavBar = () => {
             <Link to='/home'>Home</Link>
             <Link to='/form'>Create Breed</Link>
         </div>
-        <div className={style.navfilters}>
-            <div>
-                <SearchBar/>
-            </div>
-            
-        </div>
+        
         </div>
     )
 }

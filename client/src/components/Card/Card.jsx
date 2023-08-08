@@ -3,7 +3,7 @@ import style from './Card.module.css'
 const Card = (props) => {
     return(
         <div className={style.card}>
-            <Link className={style.link} to={`/${props.id}`}>
+            <Link className={style.link} to={`/detail/${props.id}`}>
 
             <div className={style.imageArea}></div>
             <img className={style.dogImage} src={props.image} alt={props.name}/>

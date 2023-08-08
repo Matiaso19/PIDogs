@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import style from './Form.module.css';
 import axios from 'axios';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { getTemperaments } from '../../redux/actions';
 
 
 //chip
@@ -17,8 +18,18 @@ const Chip = ({ label, onDelete }) => {
   };
 
 
-const Form = () => {
-   
+  const Form = () => {
+    const dispatch = useDispatch();
+    let temperaments = useSelector((state) => state.temperaments).sort(
+        function (a, b) {
+            if(a < b) return -1
+            else return 1
+        }
+    );
+    useEffect(() => {
+        dispatch(getTemperaments())
+    }, [dispatch])
+
     const [form, setForm] = useState({
         name: '',
         heightMin: '',
@@ -41,7 +52,6 @@ const Form = () => {
         image: ''
     })
     const [selectedTemperaments, setSelectedTemperaments] = useState([]);
-    const [temperamentList, setTemperamentList] = useState([]);
     
     useEffect(() => {
         setForm((prevForm) => ({
@@ -53,7 +63,7 @@ const Form = () => {
     const handleTemperamentsChange = (event) => {
        const selectedOptions = Array.from(event.target.selectedOptions, (option) => option.value);
        setSelectedTemperaments((prevSelectedTemperaments) => [...prevSelectedTemperaments, ...selectedOptions]);
-       //setForm({...form, temperaments: selectedTemperaments})
+       
     
 
     
@@ -158,11 +168,6 @@ const Form = () => {
             
 
     
-    useEffect(() => {
-        axios.get('http://localhost:3001/temperaments')
-        .then((res)=> setTemperamentList(res.data))
-        .catch((err) => alert(err))
-    }, []);
     
     
     
@@ -208,10 +213,10 @@ const Form = () => {
 
             <div>
             <label>Temperaments: </label>
-             <select multiple options={temperamentList} onChange={handleTemperamentsChange} value={selectedTemperaments} name='temperaments'>
-            {temperamentList.map((temperament) => (
-                <option key={temperament.id} value={temperament.name}>
-                    {temperament.name}
+             <select multiple options={temperaments} onChange={handleTemperamentsChange} value={selectedTemperaments} name='temperaments'>
+            {temperaments.map((temperament) => (
+                <option key={temperament} value={temperament}>
+                    {temperament}
                 </option>
             ))}
             </select>

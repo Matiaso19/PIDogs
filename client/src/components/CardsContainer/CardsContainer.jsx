@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import { Paginado } from '../Paginado/Paginado'
 import { Fragment, useEffect, useState } from 'react'
 import { filterDogs, filterTemperaments, getTemperaments, orderDogs, orderbyWeight } from '../../redux/actions'
-
+import { SearchBar } from '../SearchBar/SearchBar'
 
 
 const CardsContainer = () => {
@@ -12,7 +12,7 @@ const CardsContainer = () => {
     const dispatch = useDispatch();
     
     let dogs = useSelector(state=>state.dogs)
-    
+   
     let temperaments = useSelector((state) => state.temperaments).sort(
         function (a, b) {
             if(a < b) return -1
@@ -70,6 +70,12 @@ const CardsContainer = () => {
         <div className={style.container}>
         
         <div className={style.filterContainer}>
+        <div className={style.namefilter}>
+            <div>
+                <SearchBar/>
+            </div>
+            
+        </div>
 
         <div>
         <label htmlFor="order">Order By: </label>
@@ -121,7 +127,7 @@ const CardsContainer = () => {
                 id= {dog.id}
                 name = {dog.name}
 		        height = {`${dog.heightMin} cm - ${dog.heightMax} cm`}
-		        weight = {`${dog.weightMin} kg - ${dog.weightMax} kg`}
+		        weight = {`${dog?.weightMin} kg - ${dog?.weightMax} kg`}
                 
                 temperaments =  {dog.temperament}
 		        life_span = {dog.life_span}               

@@ -1,12 +1,9 @@
-import { useEffect} from 'react';
+import { Fragment, useEffect} from 'react';
 import { useParams } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import { deleteDetails, getDogDetail } from '../../redux/actions';
 import {useDispatch, useSelector} from 'react-redux';
 import style from './Detail.module.css'
-
-
-
 
 
 const Detail = () => {
@@ -18,9 +15,9 @@ const Detail = () => {
     
     const myDog = useSelector((state)=>state.details)
     const dispatch = useDispatch();
-    const goBack = useHistory();
+    const history = useHistory();
     const handleBack = () => {
-        goBack.push('/home')
+        history.push('/home')
     }
     
     useEffect(() => {
@@ -31,7 +28,8 @@ const Detail = () => {
     
         
         return (
-            <>
+            <Fragment>
+
             
             {myDog.map(dog =>{
                 return (
@@ -55,10 +53,11 @@ const Detail = () => {
                     </div>
                 )
             })}
+            </Fragment>
             
                 
             
-            </>
+            
         )
     
     

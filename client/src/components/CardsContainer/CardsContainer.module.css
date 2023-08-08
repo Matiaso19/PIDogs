@@ -11,6 +11,12 @@
     margin-top: 60px;
 
 }
-.paginado {
-    min-width: 100%;
+
+
+.filterContainer {
+    display: flex;
+    flex-direction: row;
+    border: 1px solid black;
+    justify-content: space-around;
+    border-radius: 5px;
 }
