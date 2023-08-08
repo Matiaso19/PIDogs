@@ -25,6 +25,8 @@ const getDogsHandler = async (req, res) => {
 
 const getDogsByIdHandler = async(req, res) => {
     const { idRaza } = req.params;
+    console.log(idRaza);
+    
     //me fijo con la funcion isNaN si el id que me pasaron es de la BDD o de la API y le paso ese dato (buscar) a getdogbyID
     const buscar = isNaN(idRaza) ? "bdd" : "api"
 
