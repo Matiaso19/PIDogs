@@ -26,17 +26,22 @@ const getTemperaments = async () => {
             .reduce((acc, temp) =>{
                 if(temp) {
                    const separadosxcomas = temp.split(',')
+                  
                    const trimeados = separadosxcomas.map((elemento) => elemento.trim())
+                   
                     return [...acc, ...trimeados];
                 }
+                
                 return acc;
             }, []);    
         
             const uniqueTemperament = [...new Set(allTemperaments)] 
+            
             for (const temp of uniqueTemperament) {
                 await Temperament.findOrCreate({where: {name: temp}})
             }
             const getAllDbTemperaments = await Temperament.findAll();
+
             return getAllDbTemperaments;
         }
         else { return dbTemperament}
@@ -44,7 +49,7 @@ const getTemperaments = async () => {
 
         
     } catch (error) {
-        res.send(error)
+        throw error;
     }
 }
 
