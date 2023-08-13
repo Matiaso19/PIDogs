@@ -7,16 +7,39 @@
     gap: 1em;
     justify-content: space-around;
     width: 90%;
-    margin-left: 20px;
-    margin-top: 60px;
-
+    height: 90%;
+    margin-left: 65px;
+    margin-top: 30px;
+    padding: 10px;
 }
 
 
 .filterContainer {
     display: flex;
     flex-direction: row;
-    border: 1px solid black;
+    border:none;
     justify-content: space-around;
-    border-radius: 5px;
+    
+    gap: 1em;
+}
+.filterOrder {
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    
+}
+.inputFilter {
+    border-radius: 20px;
+    border: #FB8C00 solid 1px;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+}
+.buttonFilters {
+    border-radius: 20px;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    color: white;
+    background-color: #454546;
+    cursor: pointer;
+    border: #FB8C00 solid 3px;
+}
+.buttonFilters:hover {
+    background-color: #FB8C00;
+    color: #454546;
 }

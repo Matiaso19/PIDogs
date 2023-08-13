@@ -23,9 +23,14 @@
     padding: 0.5rem 0.3rem;
     text-decoration: none;
     border-radius: 0.2rem;
-    border: 1px solid black;
+    border: none;
     color: white;
-    background-color: blue;
+    background-color: #FB8C00;
+    transition: transform 0.4s;
+    position: relative;
+}
+.paginado > span {
+    display: inline-block;
 }
 .paginado:hover, .paginado__active {
     text-align: center;
@@ -37,9 +42,12 @@
     padding: 0.5rem 0.3rem;
     text-decoration: none;
     border-radius: 0.2rem;
-    border: 2px solid #d7d7d7;
-    background-color: blueviolet;
-    color: white;
+    border: none;
+    background-color: #EF6C00;
+    color: #454546;
     border-color: white;
-    transform: scale(1.3,1.3);
+    transform: scale(1.3,1.3) rotateY(360deg);
+}
+.paginado > span, .paginado__active > span {
+    transform: rotateY(-360deg);
 }

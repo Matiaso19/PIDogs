@@ -1,29 +1,40 @@
 .card {
     display: flex;
     padding: 20px;
-    width: 300px;
-    height: 350px;
+    width: 330px;
+    height: 430px;
     margin: 10px 15px;
     border-radius: 12px;
-    background-color: #c78b0a;
+    background-color: #FFA50080;
     justify-content: flex-start;
     flex-direction: column;
     background-size: cover;
+    border: #FB8C00 solid 4px;
+    transition: transform 0.3s ease;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    color: #454546;
+    font-size: 15px;
+}
+.card:hover {
+  transform: scale(1.1);
 }
 
-.imageArea {
-    display: flex;
-    justify-content: center;
-    margin: 15px 10px 0 3px;
-    max-width: 100%;
-    overflow: hidden;
-    border-radius: 4%;
-  }
+
   
-  .dogImage {
-    top: 50%;
-    left: 50%;
-    border-radius: 2%;
-    height: 140px;
+.dogImage {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 5%;
+    border: #FB8C00 solid 2px;
     
   }
+  .title {
+    color:#c14503;
+    text-decoration: underline;
+  }
+  .props {
+    color: #454546;
+  }
+    
+    

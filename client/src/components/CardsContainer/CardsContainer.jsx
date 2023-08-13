@@ -3,8 +3,9 @@ import style from './CardsContainer.module.css'
 import {useDispatch, useSelector} from 'react-redux'
 import { Paginado } from '../Paginado/Paginado'
 import { Fragment, useEffect, useState } from 'react'
-import { filterDogs, filterTemperaments, getTemperaments, orderDogs, orderbyWeight } from '../../redux/actions'
+import { filterDogs, filterTemperaments, getDogs, getTemperaments, orderDogs, orderbyWeight } from '../../redux/actions'
 import { SearchBar } from '../SearchBar/SearchBar'
+
 
 
 const CardsContainer = () => {
@@ -41,7 +42,7 @@ const CardsContainer = () => {
         setCurrentPage(pageNumber)
     }
 
-
+    
     const handleOrder = (event) => {
         //console.log(event.target.value);
         dispatch(orderDogs(event.target.value))
@@ -58,13 +59,19 @@ const CardsContainer = () => {
         const value =event.target.value
         dispatch(orderbyWeight(value))
     }
+    const handleClearFilters = () => {
+        dispatch(getDogs())
         
+    }    
 
         
     
 
     return(
         <Fragment>
+            <div>
+                
+            </div>
         <div className={style.paginado}></div>
          <Paginado currentPage = {currentPage} maxPageNumber={maxPageNumber} dogsPerPage = {dogsPerPage} paginado = {paginado}/>
         <div className={style.container}>
@@ -77,17 +84,17 @@ const CardsContainer = () => {
             
         </div>
 
-        <div>
-        <label htmlFor="order">Order By: </label>
-        <select id="order" onChange={handleOrder}>
-        <option value="Ascendent">A - Z</option>
-        <option value="Descendent">Z - A</option>
+        <div > 
+        <label htmlFor="order" className={style.filterOrder}>Order By: </label>
+        <select id="order" onChange={handleOrder} className={style.inputFilter}>
+        <option value="Ascendent" className={style.inputFilter}>A - Z</option>
+        <option value="Descendent" className={style.inputFilter}>Z - A</option>
         
       </select>
     </div>
     <div>
-        <label htmlFor="filterDogs">Filter By: </label>
-        <select id="filterDogs" onChange={handleFilter}>
+        <label htmlFor="filterDogs" className={style.filterOrder}>Filter By: </label>
+        <select id="filterDogs" onChange={handleFilter} className={style.inputFilter}>
         <option value="All">All Dogs</option>
         <option value="false">Our Dogs</option>
         <option value="true">Your Dogs</option>
@@ -99,24 +106,26 @@ const CardsContainer = () => {
         
         
       
-    <div>
-      <label>Select one temperament: </label>
-             <select id='temperament' onChange={handleTemperament}>
+    <div className={style.filterOrder}>
+      <label >Filter By Temperament: </label>
+             <select id='temperament' onChange={handleTemperament}className={style.inputFilter}>
         {temperaments.map((temp) => (
-            <option key={temp} value={temp}>
+            <option key={temp} value={temp} >
                 {temp}
             </option>
         ))}
              </select>
     </div>
-    <div>
+    <div className={style.filterOrder}>
         <label htmlFor="filterWeight">Filter By: </label>
-        <select id="filterWeight" onChange={handleFilterWeight}>
+        <select id="filterWeight" onChange={handleFilterWeight} className={style.inputFilter}>
         <option value="min">Lighter</option>
         <option value="max">Heavier</option>
       </select>
     </div>
-        
+    <div>
+        <button onClick={handleClearFilters} className={style.buttonFilters}>Clear Filters</button>
+    </div>
         
         
     </div>

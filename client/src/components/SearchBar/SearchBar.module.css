@@ -1,0 +1,18 @@
+.input {
+    border-radius: 10px;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    border: #FB8C00 solid 1px;
+}
+
+
+.button {
+    border-radius: 10px;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    background-color:#FB8C00;
+    color: white;
+    border:  #454546 solid 1px;
+}
+.button:hover {
+    color: #454546;
+    cursor: pointer;
+}

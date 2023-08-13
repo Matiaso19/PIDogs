@@ -6,6 +6,7 @@ import style from './home.module.css'
 
 
 
+
 const Home = () => {
     
     
@@ -15,7 +16,8 @@ const Home = () => {
     }, [dispatch])
     return (
         <div className={style.homeContainer}>
-        
+            
+        <div className={style.overlayImage}></div>
 
             <CardsContainer/>
         

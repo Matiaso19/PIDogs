@@ -5,12 +5,15 @@ const Card = (props) => {
         <div className={style.card}>
             <Link className={style.link} to={`/detail/${props.id}`}>
 
-            <div className={style.imageArea}></div>
+            <div></div>
             <img className={style.dogImage} src={props.image} alt={props.name}/>
             </Link>
-            <p>Name: {props.name}</p>
-            <p>Temperament: {props.temperaments}</p>
-            <p>Weight: {props.weight}</p>
+             <div className={style.props}>
+
+            <p> <span className={style.title}>Breed:</span> {props.name}</p>
+            <p> <span className={style.title}>Temperament:</span> {props.temperaments}</p>
+            <p> <span className={style.title}>Weight:</span> {props.weight}</p>
+             </div>
 
 
 

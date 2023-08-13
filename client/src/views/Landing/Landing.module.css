@@ -1,5 +1,5 @@
 .landing {
-    background-image: url(../../images/20087-perritos.jpg);
+    background-image: url(../../images/foto_inicio.jpg);
     background-size: cover;
     overflow: auto;
     width: 100wh;
@@ -9,27 +9,59 @@
 }
 
 .title {
+    font-family:Georgia, 'Times New Roman', Times, serif;
     position: absolute;
     color: whitesmoke;
     font-weight: bold;
     font-size: 100px;
-    top: 50%;
-    left: 50%;
+    top: 5%;
+    left: 10%;
+}
+.title2 {
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    color: whitesmoke;
+    top: 35%;
+    left: 19%;
+    position: absolute;
 }
 .buttonLanding {
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    font-weight:bold;
     top: 50%;
-    left: 50%;
+    left: 20%;
     position: absolute;
-    height: 40px;
-    width: 120px;
+    height: 50px;
+    width: 140px;
     font-size: 18px;
     padding: 10px;
     color: black;
-    background-color: white;
-    border-radius: 5px;
-
-     
+    background-color: #ffa024;
+    border-radius: 25px;
+    transition: 0.2s;
+    border: solid white 0.5px;
+    color: whitesmoke;
+    
 }
 .buttonLanding:hover {
     cursor: pointer;
+    transform: scale(1.2);
 }
+.logoLink {
+    position: absolute;
+    top: 75%;
+    left:22%;
+}
+.logoGit {
+    position: absolute;
+    top: 75%;
+    left:26%;
+}
+.logoLink svg,
+.logoGit svg {
+    transition: transform 0.2s;
+}
+.logoLink:hover svg,
+.logoGit:hover svg {
+    transform: scale(1.2);
+}
+    

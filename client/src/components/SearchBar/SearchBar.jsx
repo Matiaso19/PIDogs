@@ -28,7 +28,7 @@ const handleSubmitSearch = (event) => {
     <div className={style.searchBar}>
         <input type='text' placeholder='Search a breed by name...' className={style.input} value={dogState} onChange={handleChangeSearch}>
         </input>
-        <button type='submit' onClick={handleSubmitSearch}>Search!</button>
+        <button type='submit' onClick={handleSubmitSearch} className={style.button}>Search!</button>
     </div>
   )
 }

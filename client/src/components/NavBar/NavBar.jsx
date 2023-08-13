@@ -7,9 +7,9 @@ const NavBar = () => {
     return (
         <div className={style.mainContainer}>
             <div className={style.navLinks}>
-            <Link to='/' >Welcome Page</Link>
-            <Link to='/home'>Home</Link>
-            <Link to='/form'>Create Breed</Link>
+            <Link to='/home' className={style.link}>Home</Link>
+            <Link to='/form' className={style.link}>Create Your Dog!</Link>
+            <Link to='/' className={style.link}>Welcome</Link>
         </div>
         
         </div>
