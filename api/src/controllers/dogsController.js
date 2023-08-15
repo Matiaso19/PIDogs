@@ -50,6 +50,7 @@ const cleanArraydbDetail = (array) => {
 }
 
 const cleanArray = (array) => {
+    
     const limpio = array.map(elemento => {
         let weight = elemento.weight.metric.split('-')
         let height = elemento.height.metric.split('-')
@@ -65,7 +66,8 @@ const cleanArray = (array) => {
         
         return {
             id: elemento.id,
-            image: elemento.image.url,
+            
+            image: "https://cdn2.thedogapi.com/images/"+ elemento.reference_image_id + ".jpg",
             name: elemento.name,
             heightMin: heightMin ? heightMin : heightMax,
             heightMax: heightMax ? heightMax : heightMin,
@@ -80,6 +82,7 @@ const cleanArray = (array) => {
     return limpio;
 }
 const cleanArrayDetail = (array) => {
+    
     const limpio = array.map(elemento => {
         let weight = elemento.weight.metric.split('-')
         let height = elemento.height.metric.split('-')
@@ -92,7 +95,7 @@ const cleanArrayDetail = (array) => {
         
         return {
             id: elemento.id,
-            image: elemento.image.url,
+            image: "https://cdn2.thedogapi.com/images/"+ elemento.reference_image_id + ".jpg",
             name: elemento.name,
             heightMin: heightMin ? heightMin : heightMax,
             heightMax: heightMax ? heightMax : heightMin,
@@ -103,6 +106,7 @@ const cleanArrayDetail = (array) => {
             life_span: elemento.life_span,
         }
     });
+    
     return limpio;
 }
 
@@ -152,9 +156,9 @@ const getAllDogs = async () => {
     //buscar en la API
     const apiDogsCrudo = (await axios.get(`${URL}?api_key=${API_KEY}`)).data
     //limpiamos el array para traer solo lo que necesitamos
-    //console.log(apiDogsCrudo);
-    
+    console.log(apiDogsCrudo);
     const apiDogs = cleanArray(apiDogsCrudo);
+    //console.log(apiDogs);
     //unificar los datos
     const results = [...databaseDogs, ...apiDogs];
 
