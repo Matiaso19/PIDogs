@@ -16,14 +16,14 @@
 
 .formContainer {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
-    margin-top: 1px;
-    margin-left: 80px;
+    margin-top: 20px;
+    margin-left: -500px;
     margin-bottom: 60px;
     border-radius: 10px;
     border: #FB8C00 solid 2px;
-    width: 600px;
+    width: 300px;
     height: 550px;
     padding: 1%;
     color: white;
@@ -35,6 +35,7 @@
     display: flex;
     align-items: flex-end;
     border: #FB8C00 solid 1.5px;
+    min-height: 10px;
     
 }
 .title {
@@ -46,19 +47,19 @@
     color: #FF4000;
     font-size:smaller;
     font-weight: bold;
+    min-height: 10px;
     
 }
 
 
-  .button {
+.button {
     border: #454546 solid 2px;
     color: white;
     position: absolute;
     width: 120px;
-    height: 50px;
-    margin-top: 15%;
-    margin-bottom: 40%;
-    margin-left: 10%;
+    min-height: 50px;
+    margin-top: auto;
+    margin-left: -50px;
     
     border-radius: 10px;
     background-color:#FB8C00;
@@ -75,5 +76,10 @@
     font-family: Georgia, 'Times New Roman', Times, serif;
     border: #FB8C00 solid 2px;
     color: #FB8C00;
+}
+.chip {
+    border: white solid 1px;
+    width: 100px;
+    border-radius: 5px;
 }
 

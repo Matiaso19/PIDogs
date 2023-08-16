@@ -10,6 +10,7 @@ import { SearchBar } from '../SearchBar/SearchBar'
 
 const CardsContainer = () => {
     
+    
     const dispatch = useDispatch();
     
     let dogs = useSelector(state=>state.dogs)
@@ -44,16 +45,18 @@ const CardsContainer = () => {
 
     
     const handleOrder = (event) => {
-        //console.log(event.target.value);
+        
         dispatch(orderDogs(event.target.value))
     }
     const handleFilter = (event) => {
         const value =event.target.value
         dispatch(filterDogs(value))
+        
     }
     const handleTemperament = (event) => {
         const value =event.target.value
         dispatch(filterTemperaments(value))
+        
     }
     const handleFilterWeight = (event) => {
         const value =event.target.value
@@ -129,7 +132,8 @@ const CardsContainer = () => {
         
         
     </div>
-            {dividir.map(dog => {
+           
+           {dividir.map(dog => {
                 return <Card
                 key = {dog.id}
                 image = {dog.image}
@@ -137,12 +141,14 @@ const CardsContainer = () => {
                 name = {dog.name}
 		        height = {`${dog.heightMin} cm - ${dog.heightMax} cm`}
 		        weight = {`${dog?.weightMin} kg - ${dog?.weightMax} kg`}
-                
                 temperaments =  {dog.temperament}
-		        life_span = {dog.life_span}               
+                life_span = {dog.life_span}
+		      
                 
                 />
-            })}
+            })
+            }
+            
         </div>
     </Fragment>
         

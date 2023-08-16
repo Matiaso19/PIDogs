@@ -13,6 +13,9 @@ const Card = (props) => {
             <p> <span className={style.title}>Breed:</span> {props.name}</p>
             <p> <span className={style.title}>Temperament:</span> {props.temperaments}</p>
             <p> <span className={style.title}>Weight:</span> {props.weight}</p>
+            
+            
+            
              </div>
 
 

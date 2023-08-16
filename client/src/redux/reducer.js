@@ -37,7 +37,8 @@ const rootReducer = (state=initialState, action) => {
               const filterTemp = state.allDogs.filter((dog) => {
                 if(dog.temperament){
                   const dogsTempArray = dog.temperament.split(',').map((temp) =>  temp.trim());
-                    return dogsTempArray.includes(action.payload)
+                    
+                  return dogsTempArray.includes(action.payload)
                   } else {
                     return false
                   }

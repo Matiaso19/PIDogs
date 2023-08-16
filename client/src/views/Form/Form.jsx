@@ -6,12 +6,12 @@ import { getTemperaments } from '../../redux/actions';
 import { useHistory } from 'react-router-dom';
 
 
-//chip
+
 const Chip = ({ label, onDelete }) => {
     return (
       <div className={style.chip}>
         {label}
-        <span className={style.closeIcon} onClick={onDelete}>
+        <span onClick={onDelete}>
           &times;
         </span>
       </div>
@@ -58,7 +58,7 @@ const Chip = ({ label, onDelete }) => {
         image: ''
     })
     const [selectedTemperaments, setSelectedTemperaments] = useState([]);
-    console.log(errors);
+    
     
     useEffect(() => {
         setForm((prevForm) => ({
@@ -66,12 +66,21 @@ const Chip = ({ label, onDelete }) => {
             temperaments: selectedTemperaments
             
         }));
+       
+        
     }, [selectedTemperaments]);
 
     const handleTemperamentsChange = (event) => {
        const selectedOptions = Array.from(event.target.selectedOptions, (option) => option.value);
-       setSelectedTemperaments((prevSelectedTemperaments) => [...prevSelectedTemperaments, ...selectedOptions]);
+       const newSelectedTemperaments = [];
+       for (const temp of selectedOptions) {
+            if(!selectedTemperaments.includes(temp)) {
+                newSelectedTemperaments.push(temp)
+            }
+       }
+       setSelectedTemperaments((prevSelectedTemperaments) => [...prevSelectedTemperaments, ...newSelectedTemperaments]);
        
+       validate({ ...form, temperaments: [...selectedTemperaments, ...newSelectedTemperaments] });
     
 
     
@@ -89,7 +98,7 @@ const Chip = ({ label, onDelete }) => {
         let value = event.target.value;
         if(property === 'name') {
             value = value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
-            console.log(value);
+            
         }
         
         
@@ -158,16 +167,14 @@ const Chip = ({ label, onDelete }) => {
             newErrors.name = 'This name already exists in the database, please choose another one';
         }
         
+        if(data.temperaments.length === 0) {
+            newErrors.temperaments = 'Please, choose one temperament'
+        } else {
+            newErrors.temperaments = '';
+        }
         
-        
-        
-        
-        
-    
-        
-
         setErrors(newErrors);
-        console.log(newErrors);
+        
         return newErrors;
       }
       
@@ -218,18 +225,6 @@ const Chip = ({ label, onDelete }) => {
 
 
     }
-
-        
-
-            
-            
-
-    
-    
-    
-    
-    
-
 
     return (
         <form onSubmit={submitHandler} className={style.container}>
@@ -317,7 +312,7 @@ const Chip = ({ label, onDelete }) => {
                     <Chip key={temperament} label={temperament} onDelete={()=> handleDeleteTemperament(temperament)}></Chip>
                 ))}
             </div>
-            {errors.temperaments && <span>{errors.temperaments}</span>}
+            {errors.temperaments && <span className={style.error}>{errors.temperaments}</span>}
             </div>
             
             
@@ -336,3 +331,24 @@ const Chip = ({ label, onDelete }) => {
 }
 
 export default Form;
+       
+
+            
+            
+        
+        
+        
+        
+        
+    
+        
+
+
+    
+    
+    
+    
+    
+
+
+   
